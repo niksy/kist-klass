@@ -1,0 +1,28 @@
+{
+  "name": "kist-klass",
+  "version": "0.0.0",
+  "description": "Simple class system.",
+  "authors": [
+    "Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com/)"
+  ],
+  "license": "MIT",
+  "main": "dist/kist-klass.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src",
+    "Gruntfile.js",
+    "package.json"
+  ],
+  "homepage": "https://github.com/niksy/kist-klass",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "class"
+  ]
+}
