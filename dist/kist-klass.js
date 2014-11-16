@@ -1,18 +1,5 @@
-/*! kist-klass 0.1.0 - Simple class system. | Author: Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com/), 2014 | License: MIT */
+/*! kist-klass 0.1.1 - Simple class system. | Author: Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com/), 2014 | License: MIT */
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),(f.kist||(f.kist={})).klass=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-/*!
- * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
- *
- * Copyright (c) 2014 Jon Schlinkert, contributors.
- * Licensed under the MIT License
- */
-
-'use strict';
-
-module.exports = function isPlainObject(o) {
-  return !!o && typeof o === 'object' && o.constructor === Object;
-};
-},{}],2:[function(require,module,exports){
 module.exports = extend
 
 function extend(target) {
@@ -29,30 +16,21 @@ function extend(target) {
     return target
 }
 
-},{}],3:[function(require,module,exports){
-/* jshint latedef:false */
-
+},{}],2:[function(require,module,exports){
 var objExtend = require('xtend/mutable');
-var isPlainObject = require('is-plain-object');
-
-var defaultStaticProps = {
-	extend: extend,
-	supply: supply
-};
 
 /**
  * @param  {Mixed} prop
- * @param  {Object} props
  *
  * @return {Object}
  */
-function supply ( prop, props ) {
+function supply ( prop ) {
 	if ( typeof(prop) === 'string' && this.prototype.hasOwnProperty(prop) ) {
 		prop = this.prototype[prop];
 	} else {
-		prop = isPlainObject(prop) ? prop : {};
+		prop = typeof(prop) === 'object' ? prop : {};
 	}
-	return objExtend({}, prop, props);
+	return objExtend.apply(this, [].concat([{}, prop], [].slice.call(arguments, 1)));
 }
 
 /**
@@ -70,9 +48,11 @@ function extend ( protoProps, staticProps ) {
 		Child = protoProps.constructor;
 	} else {
 		Child = function () {
-			Child._super.constructor.apply(this, arguments);
+			return Child._super.constructor.apply(this, arguments);
 		};
 	}
+
+	objExtend(Child, self, staticProps);
 
 	function ChildTemp () {}
 	ChildTemp.prototype = self.prototype;
@@ -80,13 +60,8 @@ function extend ( protoProps, staticProps ) {
 	Child.prototype.constructor = Child;
 	Child._super = self.prototype;
 
-	objExtend(Child, defaultStaticProps);
-
-	if ( isPlainObject(protoProps) ) {
+	if ( protoProps ) {
 		objExtend(Child.prototype, protoProps);
-	}
-	if ( isPlainObject(staticProps) ) {
-		objExtend(Child, self, staticProps);
 	}
 
 	return Child;
@@ -94,9 +69,12 @@ function extend ( protoProps, staticProps ) {
 }
 
 function Klass () {}
-objExtend(Klass, defaultStaticProps);
+objExtend(Klass, {
+	extend: extend,
+	supply: supply
+});
 
 module.exports = Klass;
 
-},{"is-plain-object":1,"xtend/mutable":2}]},{},[3])(3)
+},{"xtend/mutable":1}]},{},[2])(2)
 });
