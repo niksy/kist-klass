@@ -1,26 +1,17 @@
-/* jshint latedef:false */
-
 var objExtend = require('xtend/mutable');
-var isPlainObject = require('is-plain-object');
-
-var defaultStaticProps = {
-	extend: extend,
-	supply: supply
-};
 
 /**
  * @param  {Mixed} prop
- * @param  {Object} props
  *
  * @return {Object}
  */
-function supply ( prop, props ) {
+function supply ( prop ) {
 	if ( typeof(prop) === 'string' && this.prototype.hasOwnProperty(prop) ) {
 		prop = this.prototype[prop];
 	} else {
-		prop = isPlainObject(prop) ? prop : {};
+		prop = typeof(prop) === 'object' ? prop : {};
 	}
-	return objExtend({}, prop, props);
+	return objExtend.apply(this, [].concat([{}, prop], [].slice.call(arguments, 1)));
 }
 
 /**
@@ -38,9 +29,11 @@ function extend ( protoProps, staticProps ) {
 		Child = protoProps.constructor;
 	} else {
 		Child = function () {
-			Child._super.constructor.apply(this, arguments);
+			return Child._super.constructor.apply(this, arguments);
 		};
 	}
+
+	objExtend(Child, self, staticProps);
 
 	function ChildTemp () {}
 	ChildTemp.prototype = self.prototype;
@@ -48,13 +41,8 @@ function extend ( protoProps, staticProps ) {
 	Child.prototype.constructor = Child;
 	Child._super = self.prototype;
 
-	objExtend(Child, defaultStaticProps);
-
-	if ( isPlainObject(protoProps) ) {
+	if ( protoProps ) {
 		objExtend(Child.prototype, protoProps);
-	}
-	if ( isPlainObject(staticProps) ) {
-		objExtend(Child, self, staticProps);
 	}
 
 	return Child;
@@ -62,6 +50,9 @@ function extend ( protoProps, staticProps ) {
 }
 
 function Klass () {}
-objExtend(Klass, defaultStaticProps);
+objExtend(Klass, {
+	extend: extend,
+	supply: supply
+});
 
 module.exports = Klass;

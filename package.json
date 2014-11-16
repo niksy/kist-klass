@@ -30,7 +30,6 @@
     "load-grunt-tasks": "^0.6.0"
   },
   "dependencies": {
-    "is-plain-object": "^0.1.0",
     "xtend": "^4.0.0"
   },
   "repository": {
