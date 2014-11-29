@@ -17,7 +17,7 @@ module.exports = function ( grunt ) {
 					banner: '<%= meta.banner %>'
 				},
 				files: {
-					'dist/kist-klass.js': ['compiled/src/kist-klass.js']
+					'dist/kist-klass.js': ['compiled/index.js']
 				}
 			}
 		},
@@ -28,7 +28,7 @@ module.exports = function ( grunt ) {
 					banner: '<%= meta.banner %>'
 				},
 				files: {
-					'dist/kist-klass.min.js': ['compiled/src/kist-klass.js']
+					'dist/kist-klass.min.js': ['compiled/index.js']
 				}
 			}
 		},
@@ -54,6 +54,7 @@ module.exports = function ( grunt ) {
 				},
 				files: {
 					src: [
+						'<%= pkg.main %>',
 						'src/**/*.js'
 					]
 				}
@@ -66,20 +67,24 @@ module.exports = function ( grunt ) {
 					jshintrc: '.jshintrc'
 				},
 				src: [
+					'<%= pkg.main %>',
 					'src/**/*.js'
 				]
 			}
 		},
 
 		browserify: {
+			options: {
+				browserifyOptions: {
+					standalone: 'kist.klass'
+				}
+			},
 			standalone: {
 				options: {
-					browserifyOptions: {
-						standalone: 'kist.klass'
-					}
+					plugin: ['bundle-collapser/plugin']
 				},
 				files: {
-					'compiled/src/kist-klass.js': ['src/kist-klass.js']
+					'compiled/index.js': ['index.js']
 				}
 			},
 			test: {

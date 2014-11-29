@@ -29,7 +29,7 @@ function extend ( protoProps, staticProps ) {
 		Child = protoProps.constructor;
 	} else {
 		Child = function () {
-			return Child._super.constructor.apply(this, arguments);
+			Child._super.constructor.apply(this, arguments);
 		};
 	}
 
