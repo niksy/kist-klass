@@ -7,7 +7,7 @@ Simple class system. Inspired by [Backbone](http://backbonejs.org/) extend and [
 ```sh
 npm install kist-klass --save
 
-bower install niksy/kist-klass --save
+bower install kist-klass --save
 ```
 
 ## API
@@ -19,14 +19,6 @@ Returns: `Klass`
 Extend base (or already extended class).
 
 If you provide `constructor` method, it will override default constructor.
-
-### `.supply(prop, props)`
-
-Returns: `Object`
-
-Returns new object with merged properties.
-
-If `prop` is string, it is property on current class prototype.
 
 ### `._super`
 
@@ -50,9 +42,9 @@ var Bar = Foo.extend({
 		// Constructor logic
 		Bar._super.constructor.apply(this, arguments);
 	}
-	props: Foo.supply('props', {
+	props: {
 		bar: 2
-	})
+	}
 });
 
 var foo = new Foo();

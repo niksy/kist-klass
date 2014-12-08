@@ -1,20 +1,6 @@
 var objExtend = require('xtend/mutable');
 
 /**
- * @param  {Mixed} prop
- *
- * @return {Object}
- */
-function supply ( prop ) {
-	if ( typeof(prop) === 'string' && this.prototype.hasOwnProperty(prop) ) {
-		prop = this.prototype[prop];
-	} else {
-		prop = typeof(prop) === 'object' ? prop : {};
-	}
-	return objExtend.apply(this, [].concat([{}, prop], [].slice.call(arguments, 1)));
-}
-
-/**
  * @param  {Object} protoProps
  * @param  {Object} staticProps
  *
@@ -49,10 +35,5 @@ function extend ( protoProps, staticProps ) {
 
 }
 
-function Klass () {}
-objExtend(Klass, {
-	extend: extend,
-	supply: supply
-});
-
-module.exports = Klass;
+var Klass = module.exports = function () {};
+Klass.extend = extend;
