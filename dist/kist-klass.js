@@ -1,20 +1,6 @@
-/*! kist-klass 0.1.2 - Simple class system. | Author: Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com/), 2014 | License: MIT */
+/*! kist-klass 0.1.3 - Simple class system. | Author: Ivan Nikolić <niksy5@gmail.com> (http://ivannikolic.com/), 2014 | License: MIT */
 !function(e){if("object"==typeof exports&&"undefined"!=typeof module)module.exports=e();else if("function"==typeof define&&define.amd)define([],e);else{var f;"undefined"!=typeof window?f=window:"undefined"!=typeof global?f=global:"undefined"!=typeof self&&(f=self),(f.kist||(f.kist={})).klass=e()}}(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var objExtend = require(2);
-
-/**
- * @param  {Mixed} prop
- *
- * @return {Object}
- */
-function supply ( prop ) {
-	if ( typeof(prop) === 'string' && this.prototype.hasOwnProperty(prop) ) {
-		prop = this.prototype[prop];
-	} else {
-		prop = typeof(prop) === 'object' ? prop : {};
-	}
-	return objExtend.apply(this, [].concat([{}, prop], [].slice.call(arguments, 1)));
-}
 
 /**
  * @param  {Object} protoProps
@@ -51,13 +37,8 @@ function extend ( protoProps, staticProps ) {
 
 }
 
-function Klass () {}
-objExtend(Klass, {
-	extend: extend,
-	supply: supply
-});
-
-module.exports = Klass;
+var Klass = module.exports = function () {};
+Klass.extend = extend;
 
 },{}],2:[function(require,module,exports){
 module.exports = extend
