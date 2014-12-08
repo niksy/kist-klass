@@ -23,6 +23,7 @@
     "globals"
   ],
   "keywords": [
-    "class"
+    "class",
+    "browserify"
   ]
 }
