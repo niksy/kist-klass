@@ -1,3 +1,5 @@
+/* jshint mocha:true */
+
 var assert = require('assert');
 var Klass = require('../');
 

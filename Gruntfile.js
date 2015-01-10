@@ -15,7 +15,7 @@ module.exports = function ( grunt ) {
 					banner: '<%= meta.banner %>'
 				},
 				files: {
-					'dist/kist-klass.js': ['compiled/index.js']
+					'dist/<%= pkg.name %>.js': ['compiled/<%= pkg.main %>']
 				}
 			}
 		},
@@ -26,7 +26,7 @@ module.exports = function ( grunt ) {
 					banner: '<%= meta.banner %>'
 				},
 				files: {
-					'dist/kist-klass.min.js': ['compiled/index.js']
+					'dist/<%= pkg.name %>.min.js': ['compiled/<%= pkg.main %>']
 				}
 			}
 		},
@@ -53,7 +53,7 @@ module.exports = function ( grunt ) {
 				files: {
 					src: [
 						'<%= pkg.main %>',
-						'src/**/*.js'
+						'lib/**/*.js'
 					]
 				}
 			}
@@ -66,7 +66,7 @@ module.exports = function ( grunt ) {
 				},
 				src: [
 					'<%= pkg.main %>',
-					'src/**/*.js'
+					'lib/**/*.js'
 				]
 			}
 		},
@@ -82,7 +82,7 @@ module.exports = function ( grunt ) {
 					plugin: ['bundle-collapser/plugin']
 				},
 				files: {
-					'compiled/index.js': ['index.js']
+					'compiled/<%= pkg.main %>': ['<%= pkg.main %>']
 				}
 			},
 			test: {
