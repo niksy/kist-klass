@@ -1,3 +1,11 @@
+![Deprecated project](https://img.shields.io/badge/status-deprecated-red.svg)
+
+**This project is deprecated.**
+
+[Use ES classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes).
+
+---
+
 # kist-klass
 
 Simple class system. Inspired by [Backbone](http://backbonejs.org/) extend and [simple inheritance by John Resig](http://ejohn.org/blog/simple-javascript-inheritance/).
